@@ -4,10 +4,13 @@
  */
 package codicefiscale;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Scanner;
 
 /**
@@ -371,11 +374,70 @@ public class CodiceFiscale {
         return null;
 
     }
+    
+    private static String downloadFileMain() {
+        
+        String fileUrl = "https://www.dropbox.com/scl/fi/5t6yyn175czj0aacinlve/CodiciComune.csv?rlkey=d3m1zdff3y8haid7ldy3iq6yk&dl=1";
+        String fileName = "CodiciComune.csv";
+        String destinationPath = System.getProperty("user.home") + File.separator + fileName;
+        
+        File file = new File(destinationPath);
+        
+        
+        if (!file.exists()) {
+            
+            try {
+
+                System.out.println("Il file con i codici non esiste sul tuo pc. Download in corso...");
+                downloadFile(fileUrl, destinationPath);
+
+                if (file.exists()) {
+
+                    System.out.println("File scaricato con successo.");
+
+                } else {
+
+                    System.out.println("Error");
+
+                }
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+            
+        } else {
+            
+            System.out.println("Il file e gia scaricato.");
+            
+        }
+        
+        return destinationPath;
+        
+    }
+    
+    private static void downloadFile(String fileUrl, String destinationPath) throws IOException {
+        URL url = new URL(fileUrl);
+        try (BufferedInputStream in = new BufferedInputStream(url.openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(destinationPath)) {
+            byte[] dataBuffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+            }
+        }
+    }
 
     public static String ComuneNascita(String comune) throws FileNotFoundException {
         
-        String fileName = "CodiciComune.csv";
-        String filePath = System.getProperty("user.home") + "/Desktop/Codice-Fiscale/src/" + fileName;
+        //TODO Aggiungere selezione path: Dove si trova il file? 
+        
+        downloadFileMain();
+        String destinationPath = downloadFileMain();
+        
+        String filePath = destinationPath;
+        
         
         
         File file = new File(filePath);
