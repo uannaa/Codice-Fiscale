@@ -374,7 +374,8 @@ public class CodiceFiscale {
 
     public static String ComuneNascita(String comune) throws FileNotFoundException {
         
-        String filePath = "./CodiciComune.csv";
+        String fileName = "CodiciComune.csv";
+        String filePath = System.getProperty("user.home") + "/Desktop/Codice-Fiscale/src/" + fileName;
         
         
         File file = new File(filePath);
