@@ -407,10 +407,6 @@ public class CodiceFiscale {
 
             }
             
-        } else {
-            
-            System.out.println("Il file e gia scaricato.");
-            
         }
         
         return destinationPath;
