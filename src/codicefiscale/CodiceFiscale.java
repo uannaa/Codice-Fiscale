@@ -23,7 +23,7 @@ public class CodiceFiscale {
     
     /* TODO 
     
-        Creare un file reader: Cambiare il path del csv. Mettere un path generico, dentro la cartella dell src. 
+       Cambiare il path del csv. Mettere un path generico, dentro la cartella dell src. 
     
     */
     public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -374,7 +374,7 @@ public class CodiceFiscale {
 
     public static String ComuneNascita(String comune) throws FileNotFoundException {
         
-        String filePath = "C:\\Users\\paolo\\Desktop\\Codice-Fiscale\\src\\CodiciComune.csv";
+        String filePath = "./CodiciComune.csv";
         
         
         File file = new File(filePath);
