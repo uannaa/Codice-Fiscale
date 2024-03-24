@@ -44,6 +44,7 @@ public class CodiceFiscale {
 
         System.out.println("Inserisci comune di nascita: ");
         comunedinascita = s.nextLine();
+        comunedinascita = checkComune(comunedinascita);
 
         System.out.println("Inserisci data di nascita (dd/mm/yyyy): ");
         data = s.nextLine();
@@ -51,7 +52,7 @@ public class CodiceFiscale {
         System.out.println("Sesso [m/f]: ");
         sesso = s.next().charAt(0);
 
-        //metodi
+        //Metodi per calcolo
         codicefiscale += CodificaCognome(cognome);
         codicefiscale += CodificaNome(nome);
         codicefiscale += AnnoNascita(data);
@@ -68,63 +69,72 @@ public class CodiceFiscale {
 
     }
     
-    /*
-    
-    public static String pathCSV() throws FileNotFoundException {
+    public static String checkComune(String comune) {
         
-        String desktopPath = System.getProperty("user.home") + "/Desktop";
-        String fileName = "pathCSV.txt";
-        String filePath = desktopPath + fileName;
+        boolean exists = false;
+        String destinationPath = downloadFileMain();
         
-        File file = new File(filePath);
+        String filePath = destinationPath;
         
-        if (file.exists()) {
+                File file = new File(filePath);
+        
+                
+        while (exists == false) {
+            
+            exists = false;
             
             try {
-                
+
                 Scanner scanner = new Scanner(file);
-                if (scanner.hasNextLine()) {
-                    
-                    String pathCSVString = scanner.nextLine();
-                    if (!pathCSVString.isEmpty()) {
-                        
-                        return pathCSVString;
-                        
-                    } else {
-                        
-                        System.out.println("Il file esiste ma e' vuoto");
-                        pathCSVString = getInputFromUser();
-                        writeToFile(filePath, pathCSVString);
-                        
+
+                while (scanner.hasNextLine()) {
+
+                    String line = scanner.nextLine();
+
+                    String col[] = line.split(",");
+
+                    if (col.length >= 2) {
+
+                        String primaColonna = col[0];
+                        String secondaColonna = col[1];
+
+                        if (primaColonna.equalsIgnoreCase(comune)) {
+
+                            exists = true;
+
+                        }
+
                     }
-                    
-                } else {
-                    
-                    System.out.println("Il file esiste ma e' vuoto");
-                    String pathCSVString = getInputFromUser();
-                    writeToFile(filePath, pathCSVString);
-                    
+
                 }
-                
-            } catch (IOException e) {
-                
-                e.printStackTrace();
-                
+
+                scanner.close();
+
+            } catch (FileNotFoundException e) {
+
+                System.out.println("File non trovato: " + e.getMessage());
+
             }
             
-        } else {
-            
-            System.out.println("Il file non esiste. Creazione in corso...");
-            String pathCSVString = getInputFromUser();
-            writeToFile(filePath, pathCSVString);
-            
+            if (exists == false) {
+                
+                Scanner s = new Scanner(System.in);
+                System.out.println("Il comune che hai inserito non esiste!\nReinseriscilo: ");
+                comune = s.nextLine();
+                
+            }
         }
         
-        return null;
+        return comune;
         
     }
     
-    */
+    public static String checkData() {
+        
+        
+        
+    }
+    
     
     public static String getInputFromUser() {
         
@@ -427,7 +437,6 @@ public class CodiceFiscale {
 
     public static String ComuneNascita(String comune) throws FileNotFoundException {
         
-        //TODO Aggiungere selezione path: Dove si trova il file? 
         
         downloadFileMain();
         String destinationPath = downloadFileMain();
@@ -608,4 +617,5 @@ public class CodiceFiscale {
             }
         }
     }
+    
 }
