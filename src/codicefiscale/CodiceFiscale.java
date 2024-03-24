@@ -289,7 +289,7 @@ public class CodiceFiscale {
 
     public static String ComuneNascita(String comune) throws FileNotFoundException {
         
-        String filePath = "C:\\Users\\paolo\\Desktop\\CodiceFiscale\\src\\CodiciComune.csv";
+        String filePath = "C:\\Users\\paolo\\Desktop\\Codice-Fiscale\\src\\CodiciComune.csv";
         
         
         File file = new File(filePath);
