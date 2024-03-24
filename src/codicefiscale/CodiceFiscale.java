@@ -23,8 +23,7 @@ public class CodiceFiscale {
     
     /* TODO 
     
-        Creare un file reader: Se il file e vuoto allora far inserire il path del file csv, se invece il percorso del file
-        csv e' gia inserito leggere il percorso.
+        Creare un file reader: Cambiare il path del csv. Mettere un path generico, dentro la cartella dell src. 
     
     */
     public static void main(String[] args) throws FileNotFoundException, IOException {
