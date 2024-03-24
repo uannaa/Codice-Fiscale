@@ -1,0 +1,1 @@
+Quando vi chiede il percorso del file CSV, si trova nella cartella src, perció copiate il percorso del file e inseritelo.

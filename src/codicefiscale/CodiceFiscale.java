@@ -20,6 +20,13 @@ public class CodiceFiscale {
     /**
      * @param args the command line arguments
      */
+    
+    /* TODO 
+    
+        Creare un file reader: Se il file e vuoto allora far inserire il path del file csv, se invece il percorso del file
+        csv e' gia inserito leggere il percorso.
+    
+    */
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
         Scanner s = new Scanner(System.in);
@@ -57,6 +64,85 @@ public class CodiceFiscale {
         
 //        System.out.println(CarattereDiControllo(codicefiscale));
 
+    }
+    
+    /*
+    
+    public static String pathCSV() throws FileNotFoundException {
+        
+        String desktopPath = System.getProperty("user.home") + "/Desktop";
+        String fileName = "pathCSV.txt";
+        String filePath = desktopPath + fileName;
+        
+        File file = new File(filePath);
+        
+        if (file.exists()) {
+            
+            try {
+                
+                Scanner scanner = new Scanner(file);
+                if (scanner.hasNextLine()) {
+                    
+                    String pathCSVString = scanner.nextLine();
+                    if (!pathCSVString.isEmpty()) {
+                        
+                        return pathCSVString;
+                        
+                    } else {
+                        
+                        System.out.println("Il file esiste ma e' vuoto");
+                        pathCSVString = getInputFromUser();
+                        writeToFile(filePath, pathCSVString);
+                        
+                    }
+                    
+                } else {
+                    
+                    System.out.println("Il file esiste ma e' vuoto");
+                    String pathCSVString = getInputFromUser();
+                    writeToFile(filePath, pathCSVString);
+                    
+                }
+                
+            } catch (IOException e) {
+                
+                e.printStackTrace();
+                
+            }
+            
+        } else {
+            
+            System.out.println("Il file non esiste. Creazione in corso...");
+            String pathCSVString = getInputFromUser();
+            writeToFile(filePath, pathCSVString);
+            
+        }
+        
+        return null;
+        
+    }
+    
+    */
+    
+    public static String getInputFromUser() {
+        
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Inserisci il contenuto da scrivere nel file:");
+        return scanner.nextLine();
+        
+    }
+    
+    public static void writeToFile(String filePath, String content) {
+        
+        try {
+            FileWriter writer = new FileWriter(filePath);
+            writer.write(content);
+            writer.close();
+            System.out.println("Contenuto scritto nel file con successo.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 
     public static String CodificaCognome(String cognome){
