@@ -24,17 +24,11 @@ public class CodiceFiscale {
     /**
      * @param args the command line arguments
      */
-    
-    /* TODO 
-    
-       Cambiare il path del csv. Mettere un path generico, dentro la cartella dell src. 
-    
-    */
+
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
         
         CF cod = new CF();
-        Date
         
         /*
         
