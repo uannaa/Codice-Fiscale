@@ -48,6 +48,7 @@ public class CodiceFiscale {
 
         System.out.println("Inserisci data di nascita (dd/mm/yyyy): ");
         data = s.nextLine();
+        data = checkData(data);
         
         System.out.println("Sesso [m/f]: ");
         sesso = s.next().charAt(0);
@@ -129,10 +130,108 @@ public class CodiceFiscale {
         
     }
     
-    public static String checkData() {
+    public static String checkData(String data) {
         
+        boolean exists = false;
         
+
         
+        while (exists == false) {
+            
+            String giorno = data.substring(0,2);
+            String mese = data.substring(3,5);
+            String anno = data.substring(6);
+        
+            exists = true;
+            
+            if (giorno.charAt(0) == '0') {
+
+                giorno = data.substring(1,2);
+
+            }
+
+            if (mese.charAt(0) == '0') {
+
+                mese = data.substring(4,5);
+
+            }
+
+            if (anno.charAt(0) == '0') {
+
+                System.out.println("Error!");
+                exists = false;
+
+            } 
+            
+            System.out.println(giorno + " " + mese);
+            int giornonum = Integer.parseInt(giorno);
+            int mesenum = Integer.parseInt(mese);
+//            int annonum = Integer.parseInt(anno);
+
+            if (giornonum <= 0) {
+
+                System.out.println("Il giorno non puo essere minore o uguale a 0");
+                exists = false;
+
+            } 
+            
+            if (mesenum > 12) {
+                
+                System.out.println("I mesi sono solo 12");
+                exists = false;
+                
+            }
+
+            if (mesenum == 2 && giornonum > 29) {
+
+                System.out.println("Il mese di febbraio comprende solo 29 giorni");
+                exists = false;
+
+            } 
+
+            //11 4 6 9 (30) // 1 3 5 7 8 10 12
+
+            if ((mesenum == 11 || mesenum == 4 || mesenum == 6 || mesenum == 9) && giornonum > 30) {
+
+                System.out.println("Il mese che hai inserito non ha piu di 30 giorni.");
+                exists = false;
+
+            } 
+
+            if ((mesenum == 1 || mesenum == 3 || mesenum == 5 || mesenum == 7 || mesenum == 8 || mesenum == 10 || mesenum == 12) && giornonum > 31) {
+
+                System.out.println("Genio! Nessun mese ha piu di 31 giorni.");
+                exists = false;
+
+            } 
+
+            if (mesenum < 1) {
+
+                System.out.println("Mese < 1");
+                exists = false;
+
+            }
+            
+            if (giornonum < 1) {
+
+                System.out.println("Giorno < 1");
+                exists = false;
+
+            }
+            
+            if (exists == false) {
+                
+                Scanner s = new Scanner(System.in);
+                System.out.println("La data e' sbagliata.\nInserisci data di nascita (dd/mm/yyyy): ");
+                data = s.nextLine();
+                
+                
+            }
+            
+            
+        }
+        
+        return data;
     }
     
     
