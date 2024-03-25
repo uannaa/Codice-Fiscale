@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -31,6 +32,12 @@ public class CodiceFiscale {
     */
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
+        
+        CF cod = new CF();
+        Date
+        
+        /*
+        
         Scanner s = new Scanner(System.in);
 
         String nome, cognome, comunedinascita, data, codicefiscale = "";
@@ -64,7 +71,7 @@ public class CodiceFiscale {
         
         System.out.println(codicefiscale);
         writeCode(codicefiscale);
-        
+        */
         
 //        System.out.println(CarattereDiControllo(codicefiscale));
 
