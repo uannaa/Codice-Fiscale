@@ -19,11 +19,12 @@ import java.util.Scanner;
  */
 public class CF {
     
-    public static String nome, cognome, data, comune, sesso;
-    
+    public static String nome, cognome, data, comune;
+    public static char sesso;
+     
     public CF(){}   
     
-    public CF(String nome, String cognome, String data, String comune, String sesso) {
+    public CF(String nome, String cognome, String data, String comune, char sesso) {
         
         this.nome = nome;
         this.cognome = cognome;
@@ -33,7 +34,23 @@ public class CF {
         
     }
     
-    public static void DataInput() {
+    public String getCodice() throws FileNotFoundException {
+        
+        String codicefiscale = "";
+        
+        codicefiscale += CodificaCognome(CF.cognome);
+        codicefiscale += CodificaNome(CF.nome);
+        codicefiscale += AnnoNascita(CF.data);
+        codicefiscale += MeseNascita(CF.data);
+        codicefiscale += GiornoNascita(CF.data, CF.sesso);
+        codicefiscale += CodificaComuneNascita(CF.comune);
+        codicefiscale += CarattereDiControllo(codicefiscale);
+        
+        return codicefiscale;
+        
+    }
+    
+    public void DataInput() {
 
         
         Scanner s = new Scanner(System.in);
@@ -52,7 +69,7 @@ public class CF {
         CF.comune = s.nextLine();
         
         System.out.println("Inserisci sesso (m/f): ");
-        CF.sesso = s.nextLine();
+        CF.sesso = s.next().charAt(0);
         
     }
     

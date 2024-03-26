@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
+import java.util.Date;  
 import java.util.Scanner;
 
 /**
@@ -29,6 +29,9 @@ public class CodiceFiscale {
 
         
         CF cod = new CF();
+        
+        cod.DataInput();
+        cod.getCodice();
         
         /*
         
