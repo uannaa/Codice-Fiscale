@@ -22,7 +22,17 @@ public class CF {
     public static String nome, cognome, data, comune;
     public static char sesso;
      
-    public CF(){}   
+    public CF(){} 
+    
+    public CF(Utente utente){
+        
+        this.nome = utente.getNome();
+        this.cognome = utente.getCognome();
+        this.data = utente.getData();
+        this.comune = utente.getComune();
+        this.sesso = utente.getSesso();
+        
+    }
     
     public CF(String nome, String cognome, String data, String comune, char sesso) {
         

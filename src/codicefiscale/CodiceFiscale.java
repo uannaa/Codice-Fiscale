@@ -28,10 +28,16 @@ public class CodiceFiscale {
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
         
+        
+        
+        Utente utente = new Utente();
         CF cod = new CF();
         
         cod.DataInput();
-        System.out.println(cod.getCodice());
+        
+        CF cod1 = new CF(utente);
+        
+        
         
         /*
         
