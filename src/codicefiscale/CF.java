@@ -50,7 +50,7 @@ public class CF {
         
     }
     
-    public void DataInput() {
+    public void DataInput(){
 
         
         Scanner s = new Scanner(System.in);
@@ -64,18 +64,84 @@ public class CF {
         
         System.out.println("Inserisci data di nascita: (dd/mm/yyyy)");
         CF.data = s.nextLine();
+        data = checkData(data);
         
         System.out.println("Inserisci comune di nascita: ");
         CF.comune = s.nextLine();
+        comune = checkComune(comune);
         
         System.out.println("Inserisci sesso (m/f): ");
         CF.sesso = s.next().charAt(0);
         
     }
     
-    //Metodi di controllo
+    //METODI PRIVATI
     
-    public static String checkComune(String comune) {
+    //Metodi di conversione
+    private static int[] ConversioneDataInt(String data) {
+        
+        String giorno = data.substring(0,2);
+        String mese = data.substring(3,5);
+        String anno = data.substring(6);
+
+
+        if (giorno.charAt(0) == '0') {
+
+            giorno = data.substring(1,2);
+
+        }
+
+        if (mese.charAt(0) == '0') {
+
+            mese = data.substring(4,5);
+
+        } 
+        
+        int giornonum = Integer.parseInt(giorno);
+        int mesenum = Integer.parseInt(mese);
+        int annonum = Integer.parseInt(anno);
+        
+        
+        
+        return new int[]{giornonum, mesenum, annonum};
+        
+    }
+    
+    private static String[] ConversioneDataString(String data) {
+        
+        String giorno = data.substring(0,2);
+        String mese = data.substring(3,5);
+        String anno = data.substring(6);
+        
+        return new String[] {giorno, mese, anno};
+        
+    }
+    
+    //Metodi di controllo
+    private static boolean isBisestile(String data) {
+        
+        boolean isBisestile = false;
+
+        int dataconvertita[] = ConversioneDataInt(data);
+        int giornonum = dataconvertita[0];
+        int mesenum = dataconvertita[1];
+        int annonum = dataconvertita[2];
+        
+        if ((annonum - 1904) % 4 == 0)  {
+            
+            isBisestile = true;
+            
+        } else {
+            
+            isBisestile = false;
+            
+        }
+        
+        return isBisestile;
+        
+    }
+    
+    private static String checkComune(String comune) {
         
         boolean exists = false;
         String destinationPath = downloadFileMain();
@@ -135,50 +201,38 @@ public class CF {
         
     }
     
-    public static String checkData(String data) {
+    private static String checkData(String data) {
         
         boolean exists = false;
+        boolean isBisestile = isBisestile(data);
         
-
+        int dataconvertita[] = ConversioneDataInt(data);
+        int giornonum = dataconvertita[0];
+        int mesenum = dataconvertita[1];
+        int annonum = dataconvertita[2];
+        
+        String dataconvertitas[] = ConversioneDataString(data);
+        String giorno = dataconvertitas[0];
+        String mese = dataconvertitas[1];
+        String anno = dataconvertitas[2];
         
         while (exists == false) {
-            
-            String giorno = data.substring(0,2);
-            String mese = data.substring(3,5);
-            String anno = data.substring(6);
         
             exists = true;
-            
-            if (giorno.charAt(0) == '0') {
-
-                giorno = data.substring(1,2);
-
-            }
-
-            if (mese.charAt(0) == '0') {
-
-                mese = data.substring(4,5);
-
-            }
 
             if (anno.charAt(0) == '0') {
 
                 System.out.println("Error!");
                 exists = false;
 
-            } 
-            
-            System.out.println(giorno + " " + mese);
-            int giornonum = Integer.parseInt(giorno);
-            int mesenum = Integer.parseInt(mese);
-//            int annonum = Integer.parseInt(anno);
+            }
 
             if (giornonum <= 0) {
 
                 System.out.println("Il giorno non puo essere minore o uguale a 0");
                 exists = false;
 
-            } 
+            }
             
             if (mesenum > 12) {
                 
@@ -192,7 +246,19 @@ public class CF {
                 System.out.println("Il mese di febbraio comprende solo 29 giorni");
                 exists = false;
 
-            } 
+            }
+            
+            //anno bisestile
+            if (mesenum == 2 && giornonum == 29) {
+                
+                if (!isBisestile == true) {
+                    
+                    System.out.println("Il " + annonum + " non e' bisestile.");
+                    exists = false;
+                    
+                }
+                
+            }
 
             //11 4 6 9 (30) // 1 3 5 7 8 10 12
 
@@ -240,8 +306,7 @@ public class CF {
     }
     
     //Metodi di codifica
-    
-    public static String CodificaNome(String nome) {
+    private static String CodificaNome(String nome) {
 
         nome = nome.toLowerCase();
         String nomecodificato = "";
@@ -342,7 +407,7 @@ public class CF {
 
     }
     
-    public static String CodificaCognome(String cognome){
+    private static String CodificaCognome(String cognome){
 
         cognome = cognome.toLowerCase();
         String cognomecodificato = "";
@@ -405,7 +470,7 @@ public class CF {
 
     }
     
-    public static String CarattereDiControllo(String codicefiscale){
+    private static String CarattereDiControllo(String codicefiscale){
 
         codicefiscale = codicefiscale.toLowerCase();
 
@@ -478,7 +543,7 @@ public class CF {
         
     } 
     
-    public static String CodificaComuneNascita(String comune) throws FileNotFoundException {
+    private static String CodificaComuneNascita(String comune) throws FileNotFoundException {
         
         
         downloadFileMain();
@@ -542,8 +607,7 @@ public class CF {
     
     
     //Codifica delle nascita
-    
-    public static String GiornoNascita(String data, char sesso) {
+    private static String GiornoNascita(String data, char sesso) {
 
         data = data.toLowerCase();
         String dataf = "";
@@ -569,7 +633,7 @@ public class CF {
 
     }
     
-    public static String MeseNascita(String data){
+    private static String MeseNascita(String data){
 
         data = data.toLowerCase();
         String dataf = "";
@@ -595,7 +659,7 @@ public class CF {
         return mese;
     }
     
-    public static String AnnoNascita(String data) {
+    private static String AnnoNascita(String data) {
 
         String anno = "";
 
@@ -607,7 +671,6 @@ public class CF {
     }
 
     //Metodi aggiuntivi
-    
     private static void downloadFile(String fileUrl, String destinationPath) throws IOException {
         URL url = new URL(fileUrl);
         try (BufferedInputStream in = new BufferedInputStream(url.openStream());
@@ -658,7 +721,7 @@ public class CF {
         
     }
     
-    public static String getInputFromUser() {
+    private static String getInputFromUser() {
         
         Scanner scanner = new Scanner(System.in);
         System.out.println("Inserisci il contenuto da scrivere nel file:");
@@ -666,7 +729,7 @@ public class CF {
         
     }
     
-    public static void writeCode(String codicefiscale) throws IOException {
+    private static void writeCode(String codicefiscale) throws IOException {
         
         String desktopPath = System.getProperty("user.home") + "/Desktop";
         String FilePath = desktopPath + "/Codice-Fiscale.txt";

@@ -31,7 +31,7 @@ public class CodiceFiscale {
         CF cod = new CF();
         
         cod.DataInput();
-        cod.getCodice();
+        System.out.println(cod.getCodice());
         
         /*
         
@@ -68,7 +68,7 @@ public class CodiceFiscale {
         
         System.out.println(codicefiscale);
         writeCode(codicefiscale);
-        */
+        
         
 //        System.out.println(CarattereDiControllo(codicefiscale));
 
@@ -167,7 +167,7 @@ public class CodiceFiscale {
 
             } 
             
-            System.out.println(giorno + " " + mese);
+
             int giornonum = Integer.parseInt(giorno);
             int mesenum = Integer.parseInt(mese);
 //            int annonum = Integer.parseInt(anno);
@@ -719,6 +719,8 @@ public class CodiceFiscale {
                 
             }
         }
+
+        */
+
     }
-    
 }
