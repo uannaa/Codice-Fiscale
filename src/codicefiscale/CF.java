@@ -26,11 +26,17 @@ public class CF {
     
     public CF(Utente utente){
         
-        this.nome = utente.getNome();
-        this.cognome = utente.getCognome();
-        this.data = utente.getData();
-        this.comune = utente.getComune();
-        this.sesso = utente.getSesso();
+        CF.nome = utente.getNome();
+        
+        CF.cognome = utente.getCognome();
+        
+        CF.data = utente.getData();
+        CF.data = checkData(data);
+        
+        CF.comune = utente.getComune();
+        CF.comune = checkComune(comune);
+        
+        CF.sesso = utente.getSesso();
         
     }
     
@@ -61,7 +67,6 @@ public class CF {
     }
     
     public void DataInput(){
-
         
         Scanner s = new Scanner(System.in);
         
@@ -85,6 +90,24 @@ public class CF {
         
     }
     
+    public void printCode() throws FileNotFoundException {
+        
+        CF codice = new CF();
+        
+        String codicef = codice.getCodice();
+        
+        System.out.println(codicef);
+    }
+    
+    public void saveCodice() throws FileNotFoundException, IOException {
+        
+        CF codice = new CF();
+        
+        String codicef = codice.getCodice();
+        
+        writeCode(codicef);
+        
+    }
     //METODI PRIVATI
     
     //Metodi di conversione
@@ -158,7 +181,7 @@ public class CF {
         
         String filePath = destinationPath;
         
-                File file = new File(filePath);
+        File file = new File(filePath);
         
                 
         while (exists == false) {

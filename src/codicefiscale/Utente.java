@@ -26,34 +26,30 @@ public class Utente {
         
     }
     
-    public void setUtente(String nome, String cognome, String data, String comune, char sesso) {
+    public void getInput() {
+        
+        Scanner s = new Scanner(System.in);
+        
+        System.out.println("Inserisci nome: ");
+        String nome = s.nextLine();
+        
+        System.out.println("Inserisci cognome: ");
+        String cognome = s.nextLine();
+        
+        System.out.println("Inserisci data di nascita (dd/mm/yyyy): ");
+        String data = s.nextLine();
+        
+        System.out.println("Inserisci comune di nascita: ");
+        String comune = s.nextLine();
+        
+        System.out.println("Inserisci sesso (m/f): ");
+        char sesso = s.next().charAt(0);
         
         this.nome = nome;
         this.cognome = cognome;
         this.data = data;
         this.comune = comune;
         this.sesso = sesso;
-        
-    }
-    
-    public void setInputUtente() {
-        
-        Scanner s = new Scanner(System.in);
-        
-        System.out.println("Inserisci nome: ");
-        this.nome = s.nextLine();
-        
-        System.out.println("Inserisci cognome: ");
-        this.cognome = s.nextLine();
-        
-        System.out.println("Inserisci data di nascita: (dd/mm/yyyy)");
-        this.data = s.nextLine();
-        
-        System.out.println("Inserisci comune di nascita: ");
-        this.comune = s.nextLine();
-        
-        System.out.println("Inserisci sesso (m/f): ");
-        this.sesso = s.next().charAt(0);
         
     }
     
@@ -83,8 +79,8 @@ public class Utente {
     
     public char getSesso() {
         
-        return sesso;     
-             
+        return sesso;
+        
     }
         
 }
