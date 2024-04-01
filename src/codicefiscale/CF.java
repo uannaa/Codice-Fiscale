@@ -37,6 +37,7 @@ public class CF {
         CF.comune = checkComune(comune);
         
         CF.sesso = utente.getSesso();
+        CF.sesso = checkSesso(sesso);
         
     }
     
@@ -99,13 +100,44 @@ public class CF {
         System.out.println(codicef);
     }
     
+    public void saveCodice(boolean save) throws FileNotFoundException, IOException {
+        
+        if (save == true) {
+        
+            CF codice = new CF();
+        
+            String codicef = codice.getCodice();
+        
+            writeCode(codicef);
+        
+        }
+        
+    }
+    
     public void saveCodice() throws FileNotFoundException, IOException {
         
-        CF codice = new CF();
+        Scanner scanner = new Scanner(System.in);
         
-        String codicef = codice.getCodice();
+        System.out.println("Vuoi salvare questo codice fiscale su un file di testo sul desktop? (Y/N): ");
+        String select = scanner.nextLine();
         
-        writeCode(codicef);
+        if (select.equalsIgnoreCase("y")) {
+        
+            CF codice = new CF();
+        
+            String codicef = codice.getCodice();
+        
+            writeCode(codicef);
+        
+        } else if (select.equalsIgnoreCase("n")) {
+            
+            System.out.println("Ok!");
+            
+        } else {
+            
+            System.err.println("Errore!");
+            
+        }
         
     }
     //METODI PRIVATI
@@ -113,31 +145,42 @@ public class CF {
     //Metodi di conversione
     private static int[] ConversioneDataInt(String data) {
         
-        String giorno = data.substring(0,2);
-        String mese = data.substring(3,5);
-        String anno = data.substring(6);
+        String giorno;
+        String mese;
+        String anno;
+        
+        if (data.length() == 10) {
+        
+            giorno = data.substring(0,2);
+            mese = data.substring(3,5);
+            anno = data.substring(6);
 
+            if (giorno.charAt(0) == '0') {
 
-        if (giorno.charAt(0) == '0') {
+                giorno = data.substring(1,2);
 
-            giorno = data.substring(1,2);
+            }
 
+            if (mese.charAt(0) == '0') {
+
+                mese = data.substring(4,5);
+
+            }
+        
+            int giornonum = Integer.parseInt(giorno);
+            int mesenum = Integer.parseInt(mese);
+            int annonum = Integer.parseInt(anno);
+            
+            return new int[]{giornonum, mesenum, annonum};
+            
+        } else {
+            
+            System.out.println("Error!");
+            
         }
-
-        if (mese.charAt(0) == '0') {
-
-            mese = data.substring(4,5);
-
-        } 
-        
-        int giornonum = Integer.parseInt(giorno);
-        int mesenum = Integer.parseInt(mese);
-        int annonum = Integer.parseInt(anno);
         
         
-        
-        return new int[]{giornonum, mesenum, annonum};
-        
+        return null;
     }
     
     private static String[] ConversioneDataString(String data) {
@@ -217,7 +260,7 @@ public class CF {
 
             } catch (FileNotFoundException e) {
 
-                System.out.println("File non trovato: " + e.getMessage());
+                System.err.println("File non trovato: " + e.getMessage());
 
             }
             
@@ -239,44 +282,44 @@ public class CF {
         boolean exists = false;
         boolean isBisestile = isBisestile(data);
         
-        int dataconvertita[] = ConversioneDataInt(data);
-        int giornonum = dataconvertita[0];
-        int mesenum = dataconvertita[1];
-        int annonum = dataconvertita[2];
-        
-        String dataconvertitas[] = ConversioneDataString(data);
-        String giorno = dataconvertitas[0];
-        String mese = dataconvertitas[1];
-        String anno = dataconvertitas[2];
-        
         while (exists == false) {
         
+            int dataconvertita[] = ConversioneDataInt(data);
+            int giornonum = dataconvertita[0];
+            int mesenum = dataconvertita[1];
+            int annonum = dataconvertita[2];
+
+            String dataconvertitas[] = ConversioneDataString(data);
+            String giorno = dataconvertitas[0];
+            String mese = dataconvertitas[1];
+            String anno = dataconvertitas[2];
+            
             exists = true;
 
             if (anno.charAt(0) == '0') {
 
-                System.out.println("Error!");
+                System.err.println("Error!");
                 exists = false;
 
             }
 
             if (giornonum <= 0) {
 
-                System.out.println("Il giorno non puo essere minore o uguale a 0");
+                System.err.println("Il giorno non puo essere minore o uguale a 0");
                 exists = false;
 
             }
             
             if (mesenum > 12) {
                 
-                System.out.println("I mesi sono solo 12");
+                System.err.println("I mesi sono solo 12");
                 exists = false;
                 
             }
 
             if (mesenum == 2 && giornonum > 29) {
 
-                System.out.println("Il mese di febbraio comprende solo 29 giorni");
+                System.err.println("Il mese di febbraio comprende solo 29 giorni");
                 exists = false;
 
             }
@@ -286,7 +329,7 @@ public class CF {
                 
                 if (!isBisestile == true) {
                     
-                    System.out.println("Il " + annonum + " non e' bisestile.");
+                    System.err.println("Il " + annonum + " non e' bisestile.");
                     exists = false;
                     
                 }
@@ -297,38 +340,44 @@ public class CF {
 
             if ((mesenum == 11 || mesenum == 4 || mesenum == 6 || mesenum == 9) && giornonum > 30) {
 
-                System.out.println("Il mese che hai inserito non ha piu di 30 giorni.");
+                System.err.println("Il mese che hai inserito non ha piu di 30 giorni.");
                 exists = false;
 
             } 
 
             if ((mesenum == 1 || mesenum == 3 || mesenum == 5 || mesenum == 7 || mesenum == 8 || mesenum == 10 || mesenum == 12) && giornonum > 31) {
 
-                System.out.println("Genio! Nessun mese ha piu di 31 giorni.");
+                System.err.println("Genio! Nessun mese ha piu di 31 giorni.");
                 exists = false;
 
             } 
 
             if (mesenum < 1) {
 
-                System.out.println("Mese < 1");
+                System.err.println("Mese < 1");
                 exists = false;
 
             }
             
             if (giornonum < 1) {
 
-                System.out.println("Giorno < 1");
+                System.err.println("Giorno < 1");
                 exists = false;
 
+            }
+            
+            if (data.length() < 10) {
+                
+                System.err.println("Data troppo corta!");
+                exists = false;
+                
             }
             
             if (exists == false) {
                 
                 Scanner s = new Scanner(System.in);
-                System.out.println("La data e' sbagliata.\nInserisci data di nascita (dd/mm/yyyy): ");
+                System.out.println("Reinserisci data di nascita (dd/mm/yyyy): ");
                 data = s.nextLine();
-                
                 
             }
             
@@ -336,6 +385,36 @@ public class CF {
         }
         
         return data;
+    }
+    
+    private static char checkSesso(char sesso) {
+        
+        boolean exists = false;
+        Scanner scanner = new Scanner(System.in);
+        
+        
+        while (exists == false) {
+            
+            exists = true;
+        
+            if (sesso != 'm' || sesso != 'f') {
+                
+                System.err.println("Il sesso puo essere M o F");
+                exists = false;
+            
+            }
+            
+            if (exists == false) {
+                
+                System.out.println("Reiserisci: ");
+                sesso = scanner.next().charAt(0);
+                
+            }
+            
+        }
+        
+        return sesso;
+        
     }
     
     //Metodi di codifica
